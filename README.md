@@ -1,8 +1,8 @@
 # ISGHttpClient
 
-[![Version](https://img.shields.io/cocoapods/v/ISGUIViewExt.svg?style=flat)](https://cocoapods.org/pods/ISGHttpClient)
-[![License](https://img.shields.io/cocoapods/l/ISGUIViewExt.svg?style=flat)](https://cocoapods.org/pods/ISGHttpClient)
-[![Platform](https://img.shields.io/cocoapods/p/ISGUIViewExt.svg?style=flat)](https://cocoapods.org/pods/ISGHttpClient)
+[![Version](https://img.shields.io/cocoapods/v/ISGHttpClient.svg?style=flat)](https://cocoapods.org/pods/ISGHttpClient)
+[![License](https://img.shields.io/cocoapods/l/ISGHttpClient.svg?style=flat)](https://cocoapods.org/pods/ISGHttpClient)
+[![Platform](https://img.shields.io/cocoapods/p/ISGHttpClient.svg?style=flat)](https://cocoapods.org/pods/ISGHttpClient)
 
 
 ## 安装
