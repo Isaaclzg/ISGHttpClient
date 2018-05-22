@@ -15,10 +15,13 @@
 		6AE53E0320AEA2BD00075DC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AE53E0120AEA2BD00075DC6 /* LaunchScreen.storyboard */; };
 		6AE53E0620AEA2BD00075DC6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE53E0520AEA2BD00075DC6 /* main.m */; };
 		6AE53E0F20AEABCB00075DC6 /* ISGHttpClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE53E0E20AEABCB00075DC6 /* ISGHttpClient.m */; };
+		6AE53E1220AED36000075DC6 /* ISGNetworkCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AE53E1120AED36000075DC6 /* ISGNetworkCache.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		49A74CC7577DE2B3D65D55F3 /* Pods-ISGHttpClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ISGHttpClient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ISGHttpClient/Pods-ISGHttpClient.debug.xcconfig"; sourceTree = "<group>"; };
+		6AAA7CAD20B3B256000CE03B /* ISGTypedefClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISGTypedefClass.h; sourceTree = "<group>"; };
+		6AAA7CAE20B40039000CE03B /* ISGNetworkConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISGNetworkConfig.h; sourceTree = "<group>"; };
 		6AE53DF320AEA2BB00075DC6 /* ISGHttpClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ISGHttpClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AE53DF620AEA2BB00075DC6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6AE53DF720AEA2BB00075DC6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -31,6 +34,8 @@
 		6AE53E0520AEA2BD00075DC6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6AE53E0D20AEABCB00075DC6 /* ISGHttpClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISGHttpClient.h; sourceTree = "<group>"; };
 		6AE53E0E20AEABCB00075DC6 /* ISGHttpClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISGHttpClient.m; sourceTree = "<group>"; };
+		6AE53E1020AED36000075DC6 /* ISGNetworkCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISGNetworkCache.h; sourceTree = "<group>"; };
+		6AE53E1120AED36000075DC6 /* ISGNetworkCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ISGNetworkCache.m; sourceTree = "<group>"; };
 		90D5B02DD7583E02777B4400 /* Pods-ISGHttpClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ISGHttpClient.release.xcconfig"; path = "Pods/Target Support Files/Pods-ISGHttpClient/Pods-ISGHttpClient.release.xcconfig"; sourceTree = "<group>"; };
 		B74EFE0176CF3D83D9BABE45 /* libPods-ISGHttpClient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ISGHttpClient.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -96,6 +101,10 @@
 			children = (
 				6AE53E0D20AEABCB00075DC6 /* ISGHttpClient.h */,
 				6AE53E0E20AEABCB00075DC6 /* ISGHttpClient.m */,
+				6AE53E1020AED36000075DC6 /* ISGNetworkCache.h */,
+				6AE53E1120AED36000075DC6 /* ISGNetworkCache.m */,
+				6AAA7CAD20B3B256000CE03B /* ISGTypedefClass.h */,
+				6AAA7CAE20B40039000CE03B /* ISGNetworkConfig.h */,
 			);
 			name = ISGHttpClient;
 			path = ../../ISGHttpClient;
@@ -202,6 +211,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6AE53E0F20AEABCB00075DC6 /* ISGHttpClient.m in Sources */,
+				6AE53E1220AED36000075DC6 /* ISGNetworkCache.m in Sources */,
 				6AE53DFB20AEA2BB00075DC6 /* ViewController.m in Sources */,
 				6AE53E0620AEA2BD00075DC6 /* main.m in Sources */,
 				6AE53DF820AEA2BB00075DC6 /* AppDelegate.m in Sources */,

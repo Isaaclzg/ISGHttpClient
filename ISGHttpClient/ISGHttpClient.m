@@ -8,23 +8,17 @@
 
 #import "ISGHttpClient.h"
 #import <AFNetworking.h>
-
-#define kLine1 @"--------------------------------------------"
-#define kLine2 @"********************************************"
-
-#define ISGJson(data) [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]
-
+#import "ISGNetworkConfig.h"
+#import "ISGNetworkCache.h"
 
 /*! @brief 超时的时间 */
 static double const kTimeout  = 60.0;
-
-/*! @brief 端口号 */
-static NSString * const kBasePort  = @"";
 
 @interface ISGHttpClient()
 
 /*! @brief  manager */
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
+
 
 @end
 
@@ -32,6 +26,7 @@ static NSString * const kBasePort  = @"";
 
 static id _instance = nil;
 
+#pragma mark - —————————————————————Public Method—————————————————————
 + (instancetype)shareClient{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -40,45 +35,161 @@ static id _instance = nil;
     return _instance;
 }
 
-#pragma mark - GET
-- (void)getRequestWithURL:(NSString *)urlString parameters:(NSDictionary *)params success:(SuccessBlock)success failure:(FailureBlock)failure{
+#pragma mark - GET 无缓存
+- (void)getRequestWithURL:(NSString *)urlString
+               parameters:(NSDictionary *)params
+                  success:(SuccessBlock)success
+                  failure:(FailureBlock)failure {
     
     NSString *url = [NSString stringWithFormat:@"%@%@",kBasePort,urlString];
-    NSLog(@"\n%@\n请求的方式:%@\n请求的url:%@\n请求的参数:%@\n%@",kLine1,@"GET",url,params,kLine2);
+
     [self.manager GET:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSDictionary *dict = ISGJson(responseObject);
-        NSLog(@"请求成功\n返回的结果:\n%@\n%@",dict,kLine1);
+        ISGLogRequestSuccess(url, @"GET", params, dict);
         success(dict);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        NSLog(@"请求失败\n失败的错误码:%ld\n错误信息:%@\n%@",(long)error.code,error.localizedDescription,kLine1);
+        ISGLogRequestFailure(url, @"GET", params, error);
         failure(error);
     }];
     
 }
 
-#pragma mark - POST
-- (void)postRequestWithURL:(NSString *)urlString parameters:(NSDictionary *)params success:(SuccessBlock)success failure:(FailureBlock)failure{
+#pragma mark - POST 无缓存
+- (void)postRequestWithURL:(NSString *)urlString
+                parameters:(NSDictionary *)params
+                   success:(SuccessBlock)success
+                   failure:(FailureBlock)failure {
     
     NSString *url = [NSString stringWithFormat:@"%@%@",kBasePort,urlString];
-    NSLog(@"\n%@\n请求的方式:%@\n请求的url:%@\n请求的参数:%@\n%@",kLine1,@"POST",url,params,kLine2);
+    
     
     [self.manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSDictionary *dict = ISGJson(responseObject);
-        NSLog(@"请求成功\n返回的结果:\n%@\n%@",dict,kLine1);
+        ISGLogRequestSuccess(url, @"GET", params, dict);
         success(dict);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        NSLog(@"请求失败\n失败的错误码:%ld\n错误信息:%@\n%@",(long)error.code,error.localizedDescription,kLine1);
+        ISGLogRequestFailure(url, @"GET", params, error);
         failure(error);
     }];
 }
 
-#pragma mark - Getter
+#pragma mark - 缓存GET请求
+- (void)cacheGETRequestWithURL:(NSString *)urlString
+               parameters:(NSDictionary *)params
+                  success:(SuccessBlock)success
+                  failure:(FailureBlock)failure {
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@",kBasePort,urlString];
+    
+    [self.manager GET:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSDictionary *dict = ISGJson(responseObject);
+        ISGLogRequestSuccess(url, @"GET", params, dict);
+        [ISGNetworkCache cacheData:dict url:url parameters:params];
+        success(dict);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        ISGLogRequestFailure(url, @"GET", params, error);
+        failure(error);
+    }];
+}
+
+#pragma mark - 缓存POST请求
+- (void)cachePOSTRequestWithURL:(NSString *)urlString
+                parameters:(NSDictionary *)params
+                   success:(SuccessBlock)success
+                   failure:(FailureBlock)failure {
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@",kBasePort,urlString];
+    
+    [self.manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSDictionary *dict = ISGJson(responseObject);
+        ISGLogRequestSuccess(url, @"GET", params, dict);
+        [ISGNetworkCache cacheData:dict url:url parameters:params];
+        success(dict);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        ISGLogRequestFailure(url, @"GET", params, error);
+        failure(error);
+    }];
+}
+
+#pragma mark - 设置超时时间
+- (void)setTimeoutInterval:(double)timeout {
+    
+    self.manager.requestSerializer.timeoutInterval = timeout;
+}
+
+#pragma mark - 取消单个请求
+- (void)cancelRequestWithURL:(NSURL *)url
+                  parameters:(NSDictionary *)parameters {
+    
+    NSURLSessionDataTask *task = [self.manager GET:url.absoluteString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        
+        NSLog(@"JSON: %@", responseObject);
+        
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        
+    }];
+    //取消单个请求
+    [task cancel];
+}
+
+#pragma mark - 取消所有请求
+- (void)cancelAllRequest {
+    
+    [self.manager.operationQueue cancelAllOperations];
+}
+
+#pragma mark - 开始监听网络
+- (void)networkStatusWithBlock:(ISGNetworkStatusBlock)networkStatus {
+    
+    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case AFNetworkReachabilityStatusUnknown:
+                networkStatus ? networkStatus(ISGNetworkStatusUnknown) : nil;
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+                networkStatus ? networkStatus(ISGNetworkStatusNoNetwork) : nil;
+        
+                break;
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+                networkStatus ? networkStatus(ISGNetworkStatusWWAN) : nil;
+                break;
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+                networkStatus ? networkStatus(ISGNetworkStatusWiFi) : nil;
+                break;
+        }
+    }];
+}
+
+#pragma mark - 是否联网
+- (BOOL)isNetwork {
+    return [AFNetworkReachabilityManager sharedManager].reachable;
+}
+
+#pragma mark - 是否是手机网
+- (BOOL)isWWANNetwork {
+    return [AFNetworkReachabilityManager sharedManager].reachableViaWWAN;
+}
+
+#pragma mark - 是否是Wifi
+- (BOOL)isWiFiNetwork {
+    return [AFNetworkReachabilityManager sharedManager].reachableViaWiFi;
+}
+
+#pragma mark - —————————————————————Private Method—————————————————————
 - (AFHTTPSessionManager *)manager {
     
     if (nil == _manager) {
