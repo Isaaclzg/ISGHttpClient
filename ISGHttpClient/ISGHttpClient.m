@@ -41,17 +41,15 @@ static id _instance = nil;
                   success:(SuccessBlock)success
                   failure:(FailureBlock)failure {
     
-    NSString *url = [NSString stringWithFormat:@"%@%@",kBasePort,urlString];
-
-    [self.manager GET:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [self.manager GET:urlString parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSDictionary *dict = ISGJson(responseObject);
-        ISGLogRequestSuccess(url, @"GET", params, dict);
+        ISGLogRequestSuccess(urlString, @"GET", params, dict);
         success(dict);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        ISGLogRequestFailure(url, @"GET", params, error);
+        ISGLogRequestFailure(urlString, @"GET", params, error);
         failure(error);
     }];
     
@@ -63,18 +61,15 @@ static id _instance = nil;
                    success:(SuccessBlock)success
                    failure:(FailureBlock)failure {
     
-    NSString *url = [NSString stringWithFormat:@"%@%@",kBasePort,urlString];
-    
-    
-    [self.manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [self.manager POST:urlString parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSDictionary *dict = ISGJson(responseObject);
-        ISGLogRequestSuccess(url, @"GET", params, dict);
+        ISGLogRequestSuccess(urlString, @"GET", params, dict);
         success(dict);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        ISGLogRequestFailure(url, @"GET", params, error);
+        ISGLogRequestFailure(urlString, @"GET", params, error);
         failure(error);
     }];
 }
@@ -85,18 +80,16 @@ static id _instance = nil;
                   success:(SuccessBlock)success
                   failure:(FailureBlock)failure {
     
-    NSString *url = [NSString stringWithFormat:@"%@%@",kBasePort,urlString];
-    
-    [self.manager GET:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [self.manager GET:urlString parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSDictionary *dict = ISGJson(responseObject);
-        ISGLogRequestSuccess(url, @"GET", params, dict);
-        [ISGNetworkCache cacheData:dict url:url parameters:params];
+        ISGLogRequestSuccess(urlString, @"GET", params, dict);
+        [ISGNetworkCache cacheData:dict url:urlString parameters:params];
         success(dict);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        ISGLogRequestFailure(url, @"GET", params, error);
+        ISGLogRequestFailure(urlString, @"GET", params, error);
         failure(error);
     }];
 }
@@ -107,18 +100,16 @@ static id _instance = nil;
                    success:(SuccessBlock)success
                    failure:(FailureBlock)failure {
     
-    NSString *url = [NSString stringWithFormat:@"%@%@",kBasePort,urlString];
-    
-    [self.manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [self.manager POST:urlString parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSDictionary *dict = ISGJson(responseObject);
-        ISGLogRequestSuccess(url, @"GET", params, dict);
-        [ISGNetworkCache cacheData:dict url:url parameters:params];
+        ISGLogRequestSuccess(urlString, @"POST", params, dict);
+        [ISGNetworkCache cacheData:dict url:urlString parameters:params];
         success(dict);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        ISGLogRequestFailure(url, @"GET", params, error);
+        ISGLogRequestFailure(urlString, @"POST", params, error);
         failure(error);
     }];
 }

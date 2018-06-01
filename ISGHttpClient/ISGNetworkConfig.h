@@ -7,26 +7,6 @@
 //
 #ifndef ISGNetworkConfig_h
 #define ISGNetworkConfig_h
-/*!
- * `1`:测试环境
- * `0`:生产环境
- */
-#ifdef DEBUG
-#define TEST 1
-#else
-#define TEST 0
-#endif
-
-
-#if TEST
-
-#define kBasePort @"http://"
-
-#else
-
-#define kBasePort @"http://"
-
-#endif
 
 #ifdef DEBUG
 #define ISGLog(fmt, ...) NSLog((@ "[行号:%d] \n" "[函数名:%s]\n"  fmt),  __LINE__, __FUNCTION__, ##__VA_ARGS__);

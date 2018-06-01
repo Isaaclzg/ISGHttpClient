@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "ISGHttpClient"
-  s.version      = "0.3"
+  s.version      = "0.4"
   s.summary      = "ISGHttpClient."
   s.description  = <<-DESC
   网络请求，AFNetworking的简单封装
