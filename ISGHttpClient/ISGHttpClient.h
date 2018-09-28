@@ -8,11 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "ISGTypedefClass.h"
+#import <AFNetworking.h>
 
 /**
  *  网络请求工具类
  */
 @interface ISGHttpClient : NSObject
+
+/*! @brief  manager */
+@property (nonatomic, strong) AFHTTPSessionManager *manager;
 
 /**
  *  单例创建网络请求工具类

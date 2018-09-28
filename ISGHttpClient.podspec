@@ -1,10 +1,10 @@
 Pod::Spec.new do |s|
 
   s.name         = "ISGHttpClient"
-  s.version      = "0.6"
+  s.version      = "0.7"
   s.summary      = "ISGHttpClient."
   s.description  = <<-DESC
-  0.6，强求参数JSON化
+  0.7，公开manger接口
                    DESC
 
   s.homepage     = "https://github.com/Isaaclzg/ISGHttpClient"

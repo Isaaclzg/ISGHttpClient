@@ -7,7 +7,6 @@
 //
 
 #import "ISGHttpClient.h"
-#import <AFNetworking.h>
 #import "ISGNetworkConfig.h"
 #import "ISGNetworkCache.h"
 
@@ -15,10 +14,6 @@
 static double const kTimeout  = 60.0;
 
 @interface ISGHttpClient()
-
-/*! @brief  manager */
-@property (nonatomic, strong) AFHTTPSessionManager *manager;
-
 
 @end
 
