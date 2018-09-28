@@ -31,7 +31,7 @@
  *  @param failure   失败block
  */
 - (void)getRequestWithURL:(NSString *)urlString
-               parameters:(NSDictionary *)params
+               parameters:(id)params
                   success:(SuccessBlock)success
                   failure:(FailureBlock)failure;
 
@@ -44,7 +44,7 @@
  *  @param failure   失败block
  */
 - (void)postRequestWithURL:(NSString *)urlString
-                parameters:(NSDictionary *)params
+                parameters:(id)params
                    success:(SuccessBlock)success
                    failure:(FailureBlock)failure;
 
@@ -57,7 +57,7 @@
  @param failure 失败
  */
 - (void)cacheGETRequestWithURL:(NSString *)urlString
-                    parameters:(NSDictionary *)params
+                    parameters:(id)params
                        success:(SuccessBlock)success
                        failure:(FailureBlock)failure;
 
@@ -70,7 +70,7 @@
  @param failure 失败
  */
 - (void)cachePOSTRequestWithURL:(NSString *)urlString
-                     parameters:(NSDictionary *)params
+                     parameters:(id)params
                         success:(SuccessBlock)success
                         failure:(FailureBlock)failure;
 /**
@@ -87,7 +87,7 @@
  @param parameters 参数
  */
 - (void)cancelRequestWithURL:(NSURL *)url
-                  parameters:(NSDictionary *)parameters;
+                  parameters:(id)parameters;
 
 /**
  取消所有请求

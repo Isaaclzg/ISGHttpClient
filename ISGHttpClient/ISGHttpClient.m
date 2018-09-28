@@ -37,7 +37,7 @@ static id _instance = nil;
 
 #pragma mark - GET 无缓存
 - (void)getRequestWithURL:(NSString *)urlString
-               parameters:(NSDictionary *)params
+               parameters:(id)params
                   success:(SuccessBlock)success
                   failure:(FailureBlock)failure {
     
@@ -57,26 +57,26 @@ static id _instance = nil;
 
 #pragma mark - POST 无缓存
 - (void)postRequestWithURL:(NSString *)urlString
-                parameters:(NSDictionary *)params
+                parameters:(id)params
                    success:(SuccessBlock)success
                    failure:(FailureBlock)failure {
     
     [self.manager POST:urlString parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSDictionary *dict = ISGJson(responseObject);
-        ISGLogRequestSuccess(urlString, @"GET", params, dict);
+        ISGLogRequestSuccess(urlString, @"POST", params, dict);
         success(dict);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        ISGLogRequestFailure(urlString, @"GET", params, error);
+        ISGLogRequestFailure(urlString, @"POST", params, error);
         failure(error);
     }];
 }
 
 #pragma mark - 缓存GET请求
 - (void)cacheGETRequestWithURL:(NSString *)urlString
-               parameters:(NSDictionary *)params
+               parameters:(id)params
                   success:(SuccessBlock)success
                   failure:(FailureBlock)failure {
     
@@ -96,7 +96,7 @@ static id _instance = nil;
 
 #pragma mark - 缓存POST请求
 - (void)cachePOSTRequestWithURL:(NSString *)urlString
-                parameters:(NSDictionary *)params
+                parameters:(id)params
                    success:(SuccessBlock)success
                    failure:(FailureBlock)failure {
     
@@ -122,7 +122,7 @@ static id _instance = nil;
 
 #pragma mark - 取消单个请求
 - (void)cancelRequestWithURL:(NSURL *)url
-                  parameters:(NSDictionary *)parameters {
+                  parameters:(id)parameters {
     
     NSURLSessionDataTask *task = [self.manager GET:url.absoluteString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         
