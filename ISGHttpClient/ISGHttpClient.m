@@ -187,6 +187,8 @@ static id _instance = nil;
         
         _manager = [AFHTTPSessionManager manager];
         // 添加服务器可能返回的数据格式
+        // 设置请求格式
+        _manager.requestSerializer = [AFJSONRequestSerializer serializer];
         _manager.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"application/json",@"text/html",@"text/json",@"text/plain",@"text/javascript",@"text/xml",@"image/*",@"image/png"]];;
         _manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         [_manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
